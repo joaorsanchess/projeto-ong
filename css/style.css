@@ -1,0 +1,439 @@
+/* ===================================================
+   0. SYSTEM DESIGN (VARIÁVEIS GLOBAIS)
+   =================================================== */
+:root {
+    /* Paleta de Cores */
+    --cor-primaria: #3498db;
+    --cor-primaria-dark: #2980b9;
+    --cor-secundaria: #2c3e50;
+    --cor-sucesso: #27ae60;
+    --cor-erro: #e74c3c;
+    --cor-fundo: #f8f9fa;
+    --cor-texto: #555;
+    --cor-borda: #e0e0e0;
+    --cor-branca: #ffffff;
+
+    /* Tipografia */
+    --fonte-xl: 2.5rem;
+    --fonte-lg: 1.75rem;
+    --fonte-md: 1.25rem;
+    --fonte-sm: 1.1rem;
+    --fonte-xs: 0.875rem;
+    
+    /* Espaçamento */
+    --esp-xs:  0.5rem;
+    --esp-sm:  1rem;
+    --esp-md:  1.5rem;
+    --esp-lg:  2rem;
+    --esp-xl:  3rem;
+    --esp-xxl: 4rem;
+
+    /* Outros */
+    --border-radius: 8px;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --largura-maxima: 1200px;
+    --fonte-principal: 'Arial', sans-serif;
+}
+
+/* ===================================================
+   1. GLOBAL STYLES (RESET, BASE TAGS, SKIP LINK)
+   =================================================== */
+
+/* Reset e Box-sizing */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilos Base do Body */
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-size: var(--fonte-sm);
+    line-height: 1.6; 
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+/* Estilos Base de Imagens */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilos Base de Links */
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+a:hover {
+    color: var(--cor-primaria-dark);
+}
+
+/* Skip Link (Acessibilidade) */
+.skip-link {
+    position: absolute;
+    top: var(--esp-sm);
+    left: -9999px; 
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branca);
+    padding: var(--esp-sm);
+    border-radius: var(--border-radius);
+    z-index: 9999; 
+}
+.skip-link:focus {
+    left: var(--esp-sm); 
+}
+
+/* ===================================================
+   2. LAYOUT (CONTAINER, HEADER, MAIN, FOOTER)
+   =================================================== */
+
+/* Container Principal */
+.container {
+    width: 90%;
+    max-width: var(--largura-maxima);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header */
+header {
+    background-color: var(--cor-branca);
+    box-shadow: var(--sombra-suave);
+    padding-top: var(--esp-sm);
+    padding-bottom: var(--esp-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+header .container { 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header h1 { 
+    font-size: var(--fonte-lg);
+    color: var(--cor-secundaria);
+    font-weight: 700;
+}
+
+/* Main */
+main {
+    padding-top: var(--esp-xl);
+    padding-bottom: var(--esp-xl);
+}
+
+/* Footer */
+footer {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branca);
+    padding-top: var(--esp-lg);
+    padding-bottom: var(--esp-lg);
+    text-align: center;
+}
+footer a {
+    color: var(--cor-branca);
+    text-decoration: underline;
+}
+footer a:hover {
+    color: var(--cor-primaria);
+}
+
+/* ===================================================
+   3. COMPONENTS (NAVEGAÇÃO, CARDS, FORMULÁRIO, ETC.)
+   =================================================== */
+
+/* --- Componente: Navegação Principal --- */
+header nav ul {
+    display: flex;
+    gap: var(--esp-md);
+    list-style: none;
+}
+header nav a {
+    color: var(--cor-texto);
+    font-weight: 600;
+    font-size: var(--fonte-sm);
+    padding: var(--esp-sm);
+    text-decoration: none;
+    position: relative; 
+}
+header nav a::after { 
+    content: ''; 
+    position: absolute;
+    bottom: var(--esp-xs);
+    left: var(--esp-sm);
+    height: 2px;
+    width: 0; 
+    background-color: var(--cor-primaria);
+    transition: width 0.3s ease;
+}
+header nav a:hover {
+    color: var(--cor-primaria);
+}
+header nav a:hover::after {
+    width: calc(100% - var(--esp-sm) * 2);
+}
+
+/* --- Componente: Menu Hambúrguer --- */
+.menu-hamburguer {
+    display: none; 
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.menu-hamburguer span { 
+    width: 100%;
+    height: 3px;
+    background-color: var(--cor-secundaria);
+    border-radius: 2px;
+}
+
+/* --- Componente: Conteúdo do Main (Tipografia e Espaçamento) --- */
+main h2 {
+    font-size: var(--fonte-lg);
+    color: var(--cor-secundaria);
+    font-weight: 700;
+    margin-bottom: var(--esp-lg);
+}
+main h3 {
+    font-size: var(--fonte-md);
+    color: var(--cor-secundaria);
+    font-weight: 600;
+    margin-bottom: var(--esp-sm);
+}
+main p {
+    margin-bottom: var(--esp-sm);
+}
+main ul {
+    margin-bottom: var(--esp-sm);
+    padding-left: var(--esp-lg);
+}
+main ul li {
+    margin-bottom: var(--esp-xs);
+}
+main section {
+    margin-bottom: var(--esp-xl);
+}
+main figure {
+    margin-bottom: var(--esp-md);
+}
+main figcaption {
+    font-size: var(--fonte-xs);
+    color: var(--cor-texto);
+    text-align: center;
+    margin-top: var(--esp-xs);
+}
+
+/* --- Componente: Cards de Projeto --- */
+.projetos-grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--esp-lg);
+}
+/* Espaçamento do parágrafo introdutório */
+.projetos-grid > p { 
+    margin-bottom: var(--esp-lg); 
+    grid-column: 1 / -1; 
+}
+.projeto-card { 
+    background-color: var(--cor-branca);
+    border-radius: var(--border-radius);
+    box-shadow: var(--sombra-suave);
+    overflow: hidden; 
+    transition: all 0.3s ease;
+}
+.projeto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+.projeto-card figure img { 
+    width: 100%;
+    height: 200px; 
+    object-fit: cover; 
+    display: block; 
+    aspect-ratio: 800 / 533; 
+}
+.projeto-card h3 { 
+    padding: var(--esp-md) var(--esp-md) 0 var(--esp-md); 
+}
+.projeto-card p { 
+    padding: 0 var(--esp-md) var(--esp-md) var(--esp-md);
+    margin-bottom: 0; 
+}
+.projeto-card figcaption { 
+    padding: 0 var(--esp-md) var(--esp-xs) var(--esp-md);
+    text-align: right;
+    opacity: 0.7;
+}
+
+/* --- Componente: Info Card --- */
+.info-card {
+    background-color: var(--cor-branca);
+    padding: var(--esp-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--esp-lg);
+    border-left: 5px solid var(--cor-primaria);
+    box-shadow: var(--sombra-suave);
+}
+/* Reset de paddings herdados (se necessário) */
+.info-card h3 { 
+    padding: 0; 
+} 
+.info-card p { 
+    padding: 0; 
+}
+
+/* --- Componente: Formulário de Cadastro --- */
+.formulario-cadastro { 
+    background-color: var(--cor-branca);
+    padding: var(--esp-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--sombra-suave);
+    max-width: 600px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+.formulario-cadastro fieldset { 
+    border: none; 
+    margin-bottom: var(--esp-lg);
+}
+.formulario-cadastro legend { 
+    font-size: var(--fonte-md);
+    font-weight: 600;
+    color: var(--cor-secundaria);
+    margin-bottom: var(--esp-md);
+    padding-bottom: var(--esp-xs);
+    border-bottom: 2px solid var(--cor-borda);
+    width: 100%;
+}
+.formulario-cadastro label { 
+    display: block; 
+    font-weight: 600;
+    margin-bottom: var(--esp-xs);
+}
+.campo-entrada { 
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--cor-borda); 
+    border-radius: var(--border-radius);
+    font-size: 1rem; 
+    transition: all 0.3s ease;
+    outline: none;
+}
+.campo-entrada:focus { 
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+.campo-entrada:valid { 
+    border-color: var(--cor-sucesso);
+}
+.campo-entrada:invalid:not(:placeholder-shown) { 
+    border-color: var(--cor-erro);
+}
+.formulario-cadastro .campo-entrada { 
+    margin-bottom: var(--esp-md);
+}
+
+/* --- Componente: Botões --- */
+.botao { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Adicionado para garantir centralização */
+    padding: var(--esp-xs) var(--esp-sm); 
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--fonte-sm); 
+    text-align: center; 
+    text-decoration: none; /* Garante que links estilizados como botões não tenham sublinhado */
+}
+.botao-primario { 
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-primaria-dark) 100%);
+    color: var(--cor-branca);
+}
+.botao-primario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+/* Botão dentro do Info Card */
+.info-card .botao {
+    margin-top: var(--esp-md); 
+    display: inline-block; /* Comportamento de botão */
+}
+.formulario-cadastro .botao-primario { 
+    width: 100%;
+    padding: var(--esp-sm) var(--esp-md); 
+    font-size: var(--fonte-sm); 
+}
+.formulario-cadastro .botao:focus,
+.info-card .botao:focus { /* Unificado estado de foco */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+
+/* ===================================================
+   4. RESPONSIVE BREAKPOINTS (@media queries)
+   =================================================== */
+
+/* Breakpoint 1: Telas MUITO Pequenas (< 480px) */
+@media (max-width: 480px) {
+    header h1 { font-size: var(--fonte-sm); }
+    main { padding-top: var(--esp-lg); padding-bottom: var(--esp-lg); }
+    .formulario-cadastro { padding: var(--esp-md); }
+}
+
+/* Breakpoint 2: Tablet Vertical / Mobile (< 768px) */
+@media (max-width: 768px) {
+    .menu-hamburguer { display: flex; z-index: 1001; }
+    header nav { display: none; }
+    header .container { justify-content: space-between; }
+    header h1 { font-size: var(--fonte-md); }
+}
+
+/* Breakpoint 3: Tablet Horizontal / Desktop Pequeno (> 769px) */
+@media (min-width: 769px) {
+    header nav { display: block; }
+    header nav ul { display: flex; }
+    .menu-hamburguer { display: none; }
+    header h1 { font-size: var(--fonte-lg); }
+}
+
+/* Breakpoint 4: Desktops Médios (> 1024px) */
+@media (min-width: 1024px) {
+    body { font-size: calc(var(--fonte-sm) * 1.05); }
+}
+
+/* Breakpoint 5: Desktops Grandes (> 1200px) */
+@media (min-width: 1200px) {
+    /* Ajustes finos para telas muito largas, se necessário */
+}
+
+/* Breakpoint 6: Impressão */
+@media print {
+    body { background-color: var(--cor-branca); color: #000; font-size: 12pt; }
+    header, footer, .menu-hamburguer, .skip-link { display: none; }
+    a { text-decoration: underline; color: #000; }
+    main { padding: 0; }
+    .container { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+    .projeto-card, .formulario-cadastro, .info-card { /* Adicionado .info-card */
+         box-shadow: none; border: 1px solid #ccc; margin-bottom: var(--esp-md); 
+    }
+}
