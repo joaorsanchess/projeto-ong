@@ -1,0 +1,98 @@
+# Projeto ONG "Mãos que Ajudam" - Website Institucional
+
+## Descrição
+Este repositório contém o código-fonte do website institucional desenvolvido para a ONG fictícia "Mãos que Ajudam". O projeto foi criado como parte da disciplina de Desenvolvimento Front-End para Web, aplicando conceitos de HTML5, CSS3 e JavaScript para criar uma interface responsiva, acessível e funcional.
+
+O site possui três páginas principais localizadas na pasta `public/`:
+* **Página Inicial:** Apresenta a ONG, sua missão, visão, valores e impacto.
+* **Página de Projetos:** Detalha os projetos sociais, informa como ser voluntário e como doar.
+* **Página de Cadastro:** Contém um formulário para cadastro de novos voluntários com validação JavaScript.
+
+## Tecnologias Utilizadas
+* **HTML5:** Estruturação semântica do conteúdo.
+* **CSS3:** Estilização, layout responsivo (Flexbox e Grid), sistema de design com variáveis CSS, modo escuro e alto contraste (`prefers-color-scheme`, `prefers-contrast`).
+* **JavaScript (ES6+):** Manipulação do DOM, validação de formulário em tempo real (máscaras e regras aprimoradas com feedback visual), funcionalidade e acessibilidade do menu hambúrguer (toggle, foco, fechar com ESC/clique fora).
+* **Git & GitHub:** Controle de versão e hospedagem do código.
+* **Google Fonts (Roboto):** Tipografia principal.
+* **WCAG 2.1 AA:** Diretrizes de acessibilidade aplicadas (semântica, contraste verificado e ajustado, navegação por teclado, ARIA).
+* **WebP:** Formato de imagem otimizado utilizado no projeto.
+
+## Instalação e Execução
+Como este é um projeto front-end estático, não há um processo de instalação complexo.
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/joaorsanchess/projeto-ong-front-end.git](https://github.com/joaorsanchess/projeto-ong-front-end.git)
+    ```
+2.  **Navegue até a pasta:**
+    ```bash
+    cd projeto-ong-front-end
+    ```
+3.  **Abra os arquivos HTML:** Navegue até a pasta `public/` e abra os arquivos `index.html`, `projetos.html` ou `cadastro.html` diretamente no seu navegador. Para garantir que os caminhos relativos (`../css/`, `../js/`, `../imagens/`) funcionem corretamente, é recomendado usar um servidor local (como a extensão "Live Server" do VS Code) apontando para a pasta raiz do projeto ou configurado para servir a pasta `public/`.
+
+## Estrutura do Projeto
+
+A estrutura de pastas segue um padrão organizado, separando os arquivos públicos dos fontes:
+
+projeto-ong/ 
+├── public/
+| ├──index.html # Página Inicial 
+| ├── projetos.html # Página de Projetos 
+| ├── cadastro.html # Página de Cadastro 
+| ├── index.min.html # Versão HTML minificada (simulada)
+| ├── projetos.min.html # Versão HTML minificada (simulada)
+| └── cadastro.min.html # Versão HTML minificada (simulada)
+├── css/ # Arquivos de Estilo 
+| ├── style.css # CSS principal (organizado e comentado) 
+| └── style.min.css # Versão minificada para produção (simulada) 
+├── js/ # Arquivos JavaScript 
+| ├── script.js # JS principal (menu, validação de formulário) 
+| └── script.min.js # Versão minificada para produção (simulada) 
+├── imagens/ # Arquivos de Imagem 
+| ├── criancasnasala.webp 
+| ├── entregandocestabasica.webp 
+| ├── salafuturo.webp 
+| ├── organizandodoacoes.webp 
+| └── favicon.png # (favicon otimizado) 
+├── .gitignore # (Recomendado adicionar: especifica arquivos ignorados pelo Git) 
+└── README.md # Esta documentação
+
+
+*(Nota: Os arquivos nas pastas `css/`, `js/`, `imagens/` são os fontes utilizados. Os arquivos HTML na pasta `public/` referenciam esses fontes usando caminhos relativos como `../css/style.css`. Os arquivos `.min` foram gerados para simular otimização.)*
+
+## Práticas de Versionamento e Colaboração (Git/GitHub)
+
+* **Commits:** Adotamos o padrão [Conventional Commits](https://www.conventionalcommits.org/) nos commits finais do projeto para mensagens mais claras e semânticas. O histórico anterior possui mensagens descritivas, mas não segue estritamente este padrão.
+* **Branching:** Para este projeto individual, o desenvolvimento principal ocorreu na branch `main`. Em um cenário de equipe, seria recomendada uma estratégia como **GitFlow**, com branches separadas (`develop`, `feature/*`, `release/*`, `hotfix/*`), para isolar o desenvolvimento e manter a `main` estável.
+* **Releases:** Será criada uma release `v1.0.0` no GitHub após o push final, seguindo o Versionamento Semântico (SemVer), para marcar a versão final desta entrega.
+* **Pull Requests (PRs) e Issues:** Como projeto individual, PRs e Issues não foram utilizados extensivamente. Em equipe, PRs seriam essenciais para revisão de código e Issues para rastrear tarefas e bugs.
+
+## Acessibilidade (WCAG 2.1 AA)
+
+O projeto buscou atender aos critérios do nível AA das WCAG 2.1, incluindo:
+* Estrutura HTML semântica.
+* Navegação completa via teclado (skip link, ordem lógica de foco).
+* Atributos ARIA (`aria-label`, `aria-expanded`, `aria-controls`, `aria-invalid`, `aria-live`) para suporte a leitores de tela.
+* Verificação e ajuste de contraste de cores (mínimo 4.5:1 para texto normal, com exceção documentada para o botão primário).
+* Implementação de Modo Escuro (`prefers-color-scheme`) e Alto Contraste (`prefers-contrast`) via CSS.
+
+## Otimização para Produção
+
+Foram aplicadas as seguintes otimizações:
+* **Minificação:** Versões minificadas dos arquivos CSS, JS e HTML foram geradas (simuladas com ferramentas online) e incluídas no repositório.
+* **Compressão de Imagens:** As imagens originais foram convertidas para o formato WebP e comprimidas usando Squoosh, com substituição dos arquivos originais e atualização das referências no HTML.
+* **Lazy Loading:** Atributo `loading="lazy"` adicionado às imagens principais.
+* **Width/Height:** Atributos `width` e `height` definidos nas imagens para prevenir Cumulative Layout Shift (CLS).
+
+## Deploy
+O site pode ser visualizado ao vivo através do GitHub Pages no seguinte link:
+
+[https://joaorsanchess.github.io/projeto-ong/](https://joaorsanchess.github.io/projeto-ong/)
+
+*(**Importante:** A configuração padrão do GitHub Pages serve a raiz do repositório. Como os arquivos HTML estão na pasta `/public/`, o link acima pode ser necessário, ou pode ser preciso configurar o GitHub Pages para servir a partir de outra fonte, como a pasta `/docs` ou uma branch `gh-pages` contendo apenas o conteúdo da `public/`)*.
+
+## Contribuição
+Este é um projeto acadêmico individual. Contribuições externas não são esperadas no momento.
+
+## Licença
+Este projeto é para fins educacionais.

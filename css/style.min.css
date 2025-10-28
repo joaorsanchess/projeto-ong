@@ -1,11 +1,47 @@
-/* ===================================================
-   0. SYSTEM DESIGN (VARIÁVEIS GLOBAIS)
-   =================================================== */
+body,
+header nav a {
+  font-size: var(--fonte-sm);
+  color: var(--cor-texto);
+}
+header h1,
+main h2 {
+  font-size: var(--fonte-lg);
+  font-weight: 700;
+}
+main h3,
+main p,
+main ul {
+  margin-bottom: var(--esp-sm);
+}
+body,
+header nav a,
+main figcaption {
+  color: var(--cor-texto);
+}
+.info-card,
+.projetos-grid > p,
+main h2 {
+  margin-bottom: var(--esp-lg);
+}
+.container,
+.formulario-cadastro {
+  margin-left: auto;
+  margin-right: auto;
+}
+.botao,
+footer,
+main figcaption {
+  text-align: center;
+}
+.botao,
+a,
+header nav a {
+  text-decoration: none;
+}
 :root {
-  /* Paleta de Cores */
-  --cor-primaria: #3498db; /* Azul claro original (usar p/ fundos, gradiente claro) */
-  --cor-primaria-dark: #2980b9; /* Azul médio (usar p/ hover de link escuro, gradiente escuro) */
-  --cor-link: #21618c; /* Azul mais escuro (p/ texto de link - Contraste OK!) */
+  --cor-primaria: #3498db;
+  --cor-primaria-dark: #2980b9;
+  --cor-link: #21618c;
   --cor-secundaria: #2c3e50;
   --cor-sucesso: #27ae60;
   --cor-erro: #e74c3c;
@@ -13,75 +49,50 @@
   --cor-texto: #555;
   --cor-borda: #e0e0e0;
   --cor-branca: #ffffff;
-
-  /* Tipografia */
   --fonte-xl: 2.5rem;
   --fonte-lg: 1.75rem;
   --fonte-md: 1.25rem;
   --fonte-sm: 1.1rem;
   --fonte-xs: 0.875rem;
-
-  /* Espaçamento */
   --esp-xs: 0.5rem;
   --esp-sm: 1rem;
   --esp-md: 1.5rem;
   --esp-lg: 2rem;
   --esp-xl: 3rem;
   --esp-xxl: 4rem;
-
-  /* Outros */
   --border-radius: 8px;
   --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.08);
   --largura-maxima: 1200px;
-  /* (REFINAMENTO 4) Usando Google Font */
   --fonte-principal: "Roboto", sans-serif;
 }
-
-/* ===================================================
-   1. GLOBAL STYLES (RESET, BASE TAGS, SKIP LINK)
-   =================================================== */
-
-/* Reset e Box-sizing */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 html {
   scroll-behavior: smooth;
 }
-
-/* Estilos Base do Body */
 body {
   font-family: var(--fonte-principal);
   background-color: var(--cor-fundo);
-  color: var(--cor-texto);
-  font-size: var(--fonte-sm);
   line-height: 1.6;
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
-
-/* Estilos Base de Imagens */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
-
-/* Estilos Base de Links */
 a {
-  color: var(--cor-link); /* Usa o azul mais escuro para passar no contraste */
-  text-decoration: none;
-  transition: all 0.3s ease;
+  color: var(--cor-link);
+  transition: 0.3s;
 }
 a:hover {
-  color: var(--cor-primaria-dark); /* Usa o azul médio no hover */
+  color: var(--cor-primaria-dark);
 }
-
-/* Skip Link (Acessibilidade) */
 .skip-link {
   position: absolute;
   top: var(--esp-sm);
@@ -91,28 +102,16 @@ a:hover {
   padding: var(--esp-sm);
   border-radius: var(--border-radius);
   z-index: 9999;
-  /* (REFINAMENTO 1) Adiciona transição suave */
   transition: left 0.3s ease-in-out;
 }
 .skip-link:focus {
   left: var(--esp-sm);
-  /* (REFINAMENTO 1) Adiciona sombra no foco */
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
 }
-
-/* ===================================================
-   2. LAYOUT (CONTAINER, HEADER, MAIN, FOOTER)
-   =================================================== */
-
-/* Container Principal */
 .container {
   width: 90%;
   max-width: var(--largura-maxima);
-  margin-left: auto;
-  margin-right: auto;
 }
-
-/* Header */
 header {
   background-color: var(--cor-branca);
   box-shadow: var(--sombra-suave);
@@ -122,55 +121,46 @@ header {
   top: 0;
   z-index: 1000;
 }
+.menu-hamburguer span,
+footer {
+  background-color: var(--cor-secundaria);
+}
 header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 header h1 {
-  font-size: var(--fonte-lg);
   color: var(--cor-secundaria);
-  font-weight: 700;
 }
-
-/* Main */
+.botao-primario,
+footer,
+footer a {
+  color: var(--cor-branca);
+}
 main {
   padding-top: var(--esp-xl);
   padding-bottom: var(--esp-xl);
 }
-
-/* Footer */
 footer {
-  background-color: var(--cor-secundaria);
-  color: var(--cor-branca);
   padding-top: var(--esp-lg);
   padding-bottom: var(--esp-lg);
-  text-align: center;
 }
 footer a {
-  color: var(--cor-branca);
   text-decoration: underline;
 }
-footer a:hover {
-  color: var(--cor-primaria); /* Azul claro original no hover do footer */
+footer a:hover,
+header nav a:hover {
+  color: var(--cor-primaria);
 }
-
-/* ===================================================
-   3. COMPONENTS (NAVEGAÇÃO, CARDS, FORMULÁRIO, ETC.)
-   =================================================== */
-
-/* --- Componente: Navegação Principal --- */
 header nav ul {
   display: flex;
   gap: var(--esp-md);
   list-style: none;
 }
 header nav a {
-  color: var(--cor-texto);
   font-weight: 600;
-  font-size: var(--fonte-sm);
   padding: var(--esp-sm);
-  text-decoration: none;
   position: relative;
 }
 header nav a::after {
@@ -180,41 +170,40 @@ header nav a::after {
   left: var(--esp-sm);
   height: 2px;
   width: 0;
-  background-color: var(--cor-primaria); /* Linha usa azul claro */
-  transition: width 0.3s ease;
-}
-header nav a:hover {
-  color: var(--cor-primaria); /* Texto hover usa azul claro */
+  background-color: var(--cor-primaria);
+  transition: width 0.3s;
 }
 header nav a:hover::after {
   width: calc(100% - var(--esp-sm) * 2);
 }
-
-/* --- Componente: Menu Hambúrguer --- */
 .menu-hamburguer {
   display: none;
   flex-direction: column;
   justify-content: space-around;
   width: 2rem;
   height: 2rem;
-  background: transparent;
+  background: 0 0;
   border: none;
   cursor: pointer;
   padding: 0;
   position: relative;
   z-index: 1001;
 }
+.formulario-cadastro,
+.info-card {
+  background-color: var(--cor-branca);
+  padding: var(--esp-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--sombra-suave);
+}
 .menu-hamburguer span {
   width: 100%;
   height: 3px;
-  background-color: var(--cor-secundaria);
   border-radius: 2px;
-  /* (REFINAMENTO 3) Prepara as linhas para a animação */
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   transform-origin: center;
 }
-/* (REFINAMENTO 3) Animação do Hambúrguer para 'X' */
-.menu-hamburguer.menu-aberto span:nth-child(1) {
+.menu-hamburguer.menu-aberto span:first-child {
   transform: translateY(8px) rotate(45deg);
 }
 .menu-hamburguer.menu-aberto span:nth-child(2) {
@@ -223,25 +212,18 @@ header nav a:hover::after {
 .menu-hamburguer.menu-aberto span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
-
-/* --- Componente: Conteúdo do Main (Tipografia e Espaçamento) --- */
 main h2 {
-  font-size: var(--fonte-lg);
   color: var(--cor-secundaria);
-  font-weight: 700;
-  margin-bottom: var(--esp-lg);
 }
+.formulario-cadastro legend,
 main h3 {
   font-size: var(--fonte-md);
   color: var(--cor-secundaria);
-  font-weight: 600;
-  margin-bottom: var(--esp-sm);
 }
-main p {
-  margin-bottom: var(--esp-sm);
+main h3 {
+  font-weight: 600;
 }
 main ul {
-  margin-bottom: var(--esp-sm);
   padding-left: var(--esp-lg);
 }
 main ul li {
@@ -250,35 +232,33 @@ main ul li {
 main section {
   margin-bottom: var(--esp-xl);
 }
+.info-card > :last-child,
 main section:last-child {
   margin-bottom: 0;
 }
+.formulario-cadastro .campo-entrada,
+.formulario-cadastro fieldset:last-of-type,
 main figure {
   margin-bottom: var(--esp-md);
 }
 main figcaption {
   font-size: var(--fonte-xs);
-  color: var(--cor-texto);
-  text-align: center;
   margin-top: var(--esp-xs);
 }
-
-/* --- Componente: Cards de Projeto --- */
 .projetos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--esp-lg);
 }
 .projetos-grid > p {
-  margin-bottom: var(--esp-lg);
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
 }
 .projeto-card {
   background-color: var(--cor-branca);
   border-radius: var(--border-radius);
   box-shadow: var(--sombra-suave);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 .projeto-card:hover {
   transform: translateY(-5px);
@@ -289,7 +269,7 @@ main figcaption {
   height: 200px;
   object-fit: cover;
   display: block;
-  aspect-ratio: 800 / 533;
+  aspect-ratio: 800/533;
 }
 .projeto-card h3 {
   padding: var(--esp-md) var(--esp-md) 0 var(--esp-md);
@@ -303,48 +283,26 @@ main figcaption {
   text-align: right;
   opacity: 0.7;
 }
-
-/* --- Componente: Info Card --- */
-.info-card {
-  background-color: var(--cor-branca);
-  padding: var(--esp-lg);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--esp-lg);
-  border-left: 5px solid var(--cor-link); /* Usa cor de link acessível */
-  box-shadow: var(--sombra-suave);
-}
-.info-card h3 {
-  padding: 0;
-}
+.info-card h3,
 .info-card p {
   padding: 0;
+}
+.info-card {
+  border-left: 5px solid var(--cor-link);
+}
+.info-card p,
+.mensagem-erro {
   margin-bottom: var(--esp-sm);
 }
-.info-card > *:last-child {
-  margin-bottom: 0;
-}
-
-/* --- Componente: Formulário de Cadastro --- */
 .formulario-cadastro {
-  background-color: var(--cor-branca);
-  padding: var(--esp-lg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--sombra-suave);
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 .formulario-cadastro fieldset {
   border: none;
   margin-bottom: var(--esp-lg);
 }
-.formulario-cadastro fieldset:last-of-type {
-  margin-bottom: var(--esp-md);
-}
 .formulario-cadastro legend {
-  font-size: var(--fonte-md);
   font-weight: 600;
-  color: var(--cor-secundaria);
   margin-bottom: var(--esp-md);
   padding-bottom: var(--esp-xs);
   border-bottom: 2px solid var(--cor-borda);
@@ -361,8 +319,8 @@ main figcaption {
   border: 2px solid var(--cor-borda);
   border-radius: var(--border-radius);
   font-size: 1rem;
-  transition: all 0.3s ease;
-  outline: none;
+  transition: 0.3s;
+  outline: 0;
 }
 .campo-entrada:focus {
   border-color: var(--cor-primaria);
@@ -373,14 +331,8 @@ main figcaption {
 }
 .campo-entrada:invalid:not(:placeholder-shown) {
   border-color: var(--cor-erro);
-  /* (REFINAMENTO 2) Adiciona sombra vermelha sutil */
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
-.formulario-cadastro .campo-entrada {
-  margin-bottom: var(--esp-md);
-}
-
-/* --- Componente: Botões --- */
 .botao {
   display: inline-flex;
   align-items: center;
@@ -390,19 +342,15 @@ main figcaption {
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   font-size: var(--fonte-sm);
-  text-align: center;
-  text-decoration: none;
 }
 .botao-primario {
-  /* ATENÇÃO: Contraste marginal para WCAG AA. Verificado e aceito como texto grande. */
   background: linear-gradient(
     135deg,
-    var(--cor-primaria) 0%,
+    var(--cor-primaria) 0,
     var(--cor-primaria-dark) 100%
   );
-  color: var(--cor-branca);
 }
 .botao-primario:hover {
   transform: translateY(-2px);
@@ -419,21 +367,16 @@ main figcaption {
 }
 .formulario-cadastro .botao:focus,
 .info-card .botao:focus {
-  outline: none;
+  outline: 0;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
 }
-
-/* --- Estilo para Mensagens de Erro do Formulário (JS) --- */
 .mensagem-erro {
-  display: block; /* Garante que fique abaixo do input */
+  display: block;
   color: var(--cor-erro);
   font-size: var(--fonte-xs);
-  margin-top: calc(var(--esp-xs) * -1 + 4px); /* Puxa um pouco para cima */
-  margin-bottom: var(--esp-sm); /* Mantém espaço antes do próximo label */
-  min-height: 1.2em; /* Evita 'pulo' no layout quando a msg aparece/some */
+  margin-top: calc(var(--esp-xs) * -1 + 4px);
+  min-height: 1.2em;
 }
-
-/* Estilo extra para input inválido via classe JS */
 .campo-entrada.invalido {
   border-color: var(--cor-erro);
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
@@ -441,12 +384,6 @@ main figcaption {
 .campo-entrada.valido {
   border-color: var(--cor-sucesso);
 }
-
-/* ===================================================
-   4. RESPONSIVE BREAKPOINTS (@media queries)
-   =================================================== */
-
-/* Breakpoint 1: Telas MUITO Pequenas (< 480px) */
 @media (max-width: 480px) {
   header h1 {
     font-size: var(--fonte-sm);
@@ -459,16 +396,17 @@ main figcaption {
     padding: var(--esp-md);
   }
 }
-
-/* Breakpoint 2: Tablet Vertical / Mobile (< 768px) */
 @media (max-width: 768px) {
+  header nav,
+  header nav a {
+    width: 100%;
+    display: block;
+  }
   .menu-hamburguer {
     display: flex;
   }
   header nav {
-    display: block;
     position: absolute;
-    width: 100%;
     background-color: var(--cor-branca);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     top: 100%;
@@ -476,7 +414,7 @@ main figcaption {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
     z-index: 999;
   }
   header nav.menu-aberto {
@@ -495,8 +433,6 @@ main figcaption {
   }
   header nav a {
     padding: var(--esp-sm) var(--esp-lg);
-    width: 100%;
-    display: block;
   }
   header nav a::after {
     display: none;
@@ -508,14 +444,14 @@ main figcaption {
     font-size: var(--fonte-md);
   }
 }
-
-/* Breakpoint 3: Tablet Horizontal / Desktop Pequeno (> 769px) */
 @media (min-width: 769px) {
-  /* Reseta estilos mobile da navegação */
+  header nav,
+  header nav li {
+    width: auto;
+  }
   header nav {
     display: block !important;
     position: static;
-    width: auto;
     background-color: transparent;
     box-shadow: none;
     opacity: 1;
@@ -528,9 +464,6 @@ main figcaption {
     flex-direction: row;
     padding: 0;
     gap: var(--esp-md);
-  }
-  header nav li {
-    width: auto;
   }
   header nav a {
     padding: var(--esp-sm);
@@ -547,49 +480,33 @@ main figcaption {
     font-size: var(--fonte-lg);
   }
 }
-
-/* Breakpoint 4: Desktops Médios (> 1024px) */
 @media (min-width: 1024px) {
   body {
     font-size: calc(var(--fonte-sm) * 1.05);
   }
 }
-
-/* Breakpoint 5: Desktops Grandes (> 1200px) */
-@media (min-width: 1200px) {
-  /* Ajustes finos */
-}
-
-/* ===================================================
-   EXTRA 1: MODO ESCURO (prefers-color-scheme)
-   =================================================== */
-
 @media (prefers-color-scheme: dark) {
-  /* Redefine as variáveis GLOBAIS para o modo escuro */
+  .campo-entrada,
+  header h1,
+  header nav a {
+    color: var(--cor-texto);
+  }
   :root {
     --cor-fundo: #1a1a1a;
     --cor-texto: #e0e0e0;
-    --cor-secundaria: #f8f9fa; /* Invertido */
-    --cor-branca: #2c3e50; /* Invertido */
+    --cor-secundaria: #f8f9fa;
+    --cor-branca: #2c3e50;
     --cor-borda: #444;
     --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.4);
     --cor-primaria: #5dade2;
     --cor-primaria-dark: #85c1e9;
-    --cor-link: #5dade2; /* Link claro no fundo escuro */
+    --cor-link: #5dade2;
     --cor-sucesso: #58d68d;
     --cor-erro: #f1948a;
   }
-
-  /* --- Ajustes Específicos para Elementos no Modo Escuro --- */
   header {
-    background-color: var(--cor-branca); /* Cinza escuro */
+    background-color: var(--cor-branca);
     box-shadow: var(--sombra-suave);
-  }
-  header h1 {
-    color: var(--cor-texto); /* Texto claro */
-  }
-  header nav a {
-    color: var(--cor-texto);
   }
   header nav a:hover {
     color: var(--cor-primaria);
@@ -600,42 +517,37 @@ main figcaption {
   .menu-hamburguer span {
     background-color: var(--cor-texto);
   }
-
   footer {
-    background-color: var(--cor-secundaria); /* Cinza claro */
-    color: #333; /* Texto mais escuro no fundo claro */
+    background-color: var(--cor-secundaria);
+    color: #333;
   }
   footer a {
-    color: #21618c; /* Azul escuro original (contraste OK com #f8f9fa) */
+    color: #21618c;
     text-decoration: underline;
   }
   footer a:hover {
-    color: #2980b9; /* Azul médio original */
+    color: #2980b9;
   }
-
-  .projeto-card,
+  .formulario-cadastro,
   .info-card,
-  .formulario-cadastro {
-    background-color: #2c3e50; /* Cinza escuro */
+  .projeto-card {
+    background-color: #2c3e50;
     box-shadow: var(--sombra-suave);
     border: 1px solid var(--cor-borda);
   }
   .info-card {
-    border-left-color: var(--cor-primaria); /* Borda azul clara */
+    border-left-color: var(--cor-primaria);
   }
-
-  .projeto-card h3,
-  .info-card h3,
+  .formulario-cadastro label,
   .formulario-cadastro legend,
-  .formulario-cadastro label {
-    color: var(--cor-texto); /* Texto claro */
+  .info-card h3,
+  .projeto-card h3 {
+    color: var(--cor-texto);
     border-bottom-color: var(--cor-borda);
   }
-
   .campo-entrada {
     background-color: #34495e;
     border-color: var(--cor-borda);
-    color: var(--cor-texto);
   }
   .campo-entrada::placeholder {
     color: rgba(224, 224, 224, 0.6);
@@ -651,14 +563,13 @@ main figcaption {
     border-color: var(--cor-erro);
     box-shadow: 0 0 0 3px rgba(241, 148, 138, 0.15);
   }
-
   .botao-primario {
     background: linear-gradient(
       135deg,
-      var(--cor-primaria) 0%,
+      var(--cor-primaria) 0,
       var(--cor-primaria-dark) 100%
     );
-    color: #1a1a1a; /* Texto escuro no botão claro (Contraste OK) */
+    color: #1a1a1a;
   }
   .botao-primario:hover {
     box-shadow: 0 8px 25px rgba(93, 173, 226, 0.3);
@@ -667,7 +578,6 @@ main figcaption {
   .info-card .botao:focus {
     box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.4);
   }
-
   .skip-link {
     background-color: var(--cor-texto);
     color: var(--cor-fundo);
@@ -676,13 +586,7 @@ main figcaption {
     box-shadow: 0 0 0 3px rgba(224, 224, 224, 0.5);
   }
 }
-
-/* ===================================================
-   EXTRA 2: MODO ALTO CONTRASTE (prefers-contrast)
-   =================================================== */
-
 @media (prefers-contrast: more) {
-  /* Define cores de altíssimo contraste */
   :root {
     --cor-fundo: #000000;
     --cor-texto: #ffffff;
@@ -696,15 +600,13 @@ main figcaption {
     --cor-erro: #ff00ff;
     --sombra-suave: none;
   }
-
-  /* --- Ajustes Gerais Alto Contraste --- */
-  body,
-  header,
-  footer,
-  .projeto-card,
-  .info-card,
+  .campo-entrada,
   .formulario-cadastro,
-  .campo-entrada {
+  .info-card,
+  .projeto-card,
+  body,
+  footer,
+  header {
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     border: 1px solid var(--cor-borda);
@@ -716,8 +618,8 @@ main figcaption {
   h4,
   h5,
   h6,
-  legend,
-  label {
+  label,
+  legend {
     color: var(--cor-texto);
   }
   a,
@@ -729,8 +631,12 @@ main figcaption {
   footer a:hover {
     color: var(--cor-primaria-dark);
   }
-  header nav a,
-  .menu-hamburguer span {
+  .botao,
+  .campo-entrada {
+    color: var(--cor-texto);
+  }
+  .menu-hamburguer span,
+  header nav a {
     color: var(--cor-texto);
     background-color: transparent;
   }
@@ -743,7 +649,6 @@ main figcaption {
   .campo-entrada {
     background-color: var(--cor-fundo);
     border-color: var(--cor-borda);
-    color: var(--cor-texto);
   }
   .campo-entrada::placeholder {
     color: #aaa;
@@ -762,37 +667,36 @@ main figcaption {
   .botao {
     border: 2px solid var(--cor-texto);
     background: var(--cor-fundo);
-    color: var(--cor-texto);
   }
   .botao-primario {
     border-color: var(--cor-primaria);
     background: var(--cor-primaria);
     color: var(--cor-fundo);
   }
-  .botao:focus,
-  .botao-primario:focus {
+  .botao-primario:focus,
+  .botao:focus {
     outline: 2px solid var(--cor-link);
     outline-offset: 2px;
     box-shadow: none;
   }
 }
-
-/* Breakpoint 6: Impressão */
 @media print {
+  a,
   body {
-    background-color: #ffffff;
     color: #000;
+  }
+  body {
+    background-color: #fff;
     font-size: 12pt;
-  } /* Fundo branco explícito */
-  header,
-  footer,
+  }
   .menu-hamburguer,
-  .skip-link {
+  .skip-link,
+  footer,
+  header {
     display: none;
   }
   a {
     text-decoration: underline;
-    color: #000;
   }
   main {
     padding: 0;
@@ -803,9 +707,9 @@ main figcaption {
     margin: 0;
     padding: 0;
   }
-  .projeto-card,
   .formulario-cadastro,
-  .info-card {
+  .info-card,
+  .projeto-card {
     box-shadow: none;
     border: 1px solid #ccc;
     margin-bottom: var(--esp-md);
