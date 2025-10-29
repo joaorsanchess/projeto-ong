@@ -9,12 +9,9 @@
     />
     <link rel="icon" href="../imagens/favicon.png" type="image/png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/style.css" />
 
@@ -36,64 +33,42 @@
           <span></span>
           <span></span>
         </button>
+        
         <nav aria-label="Navegação principal" id="navegacaoPrincipal">
           <ul>
             <li><a href="index.html">Início</a></li>
-            <li><a href="projetos.html">Projetos</a></li>
+            <li class="dropdown">
+              <a 
+                href="projetos.html" 
+                class="dropdown-toggle"
+                aria-haspopup="true" 
+                aria-expanded="false"
+                id="projetos-menu-link"
+              >
+                Projetos
+              </a>
+              <ul class="submenu" aria-labelledby="projetos-menu-link">
+                <li><a href="projetos.html#projeto-educacao">Educação para o Futuro</a></li>
+                <li><a href="projetos.html#projeto-comunidade">Ação Comunitária</a></li>
+                <li><hr class="submenu-divisor"></li>
+                <li><a href="projetos.html">Ver Todos os Projetos</a></li>
+              </ul>
+            </li>
             <li><a href="cadastro.html">Cadastro</a></li>
           </ul>
         </nav>
-      </div>
+        </div>
     </header>
     <main id="main-content">
       <div class="container">
-        <section class="projetos-grid">
+        <section class="projetos-grid" id="grid-dinamica-projetos">
           <h2>Nossos Projetos</h2>
           <p>
             Conheça as frentes de atuação da "Mãos que Ajudam" e veja como
             estamos fazendo a diferença.
           </p>
-          <article class="projeto-card">
-            <h3>Projeto Educação para o Futuro</h3>
-            <figure>
-              <img
-                src="../imagens/salafuturo.webp"
-                alt="Alunos em uma sala de informática com uma instrutora."
-                loading="lazy"
-                width="600"
-                height="400"
-              />
-              <figcaption>
-                Alunos participando do projeto Educação para o Futuro.
-              </figcaption>
-            </figure>
-            <p>
-              Oferecemos reforço escolar, oficinas de leitura e cursos de
-              informática para crianças e adolescentes, preparando-os para um
-              futuro brilhante.
-            </p>
-          </article>
-          <article class="projeto-card">
-            <h3>Ação Comunitária: Prato Cheio</h3>
-            <figure>
-              <img
-                src="../imagens/organizandodoacoes.webp"
-                alt="Voluntários organizando caixas de doações de roupas e alimentos."
-                loading="lazy"
-                width="600"
-                height="400"
-              />
-              <figcaption>
-                Voluntários organizando doações para a comunidade.
-              </figcaption>
-            </figure>
-            <p>
-              Distribuímos cestas básicas, roupas e itens de higiene para
-              famílias em situação de vulnerabilidade, garantindo segurança
-              alimentar e dignidade.
-            </p>
-          </article>
-        </section>
+          
+          </section>
         <section>
           <h2>Como Ajudar</h2>
           <p>

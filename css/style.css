@@ -3,11 +3,13 @@
    =================================================== */
 :root {
   /* Paleta de Cores */
-  --cor-primaria: #3498db; /* Azul claro original (usar p/ fundos, gradiente claro) */
-  --cor-primaria-dark: #2980b9; /* Azul médio (usar p/ hover de link escuro, gradiente escuro) */
-  --cor-link: #21618c; /* Azul mais escuro (p/ texto de link - Contraste OK!) */
+  --cor-primaria: #3498db;        /* Azul claro original (usar p/ fundos, gradiente claro) */
+  --cor-primaria-dark: #2980b9;   /* Azul médio (usar p/ hover de link escuro, gradiente escuro) */
+  --cor-link: #21618C;           /* Azul mais escuro (p/ texto de link - Contraste OK!) */
   --cor-secundaria: #2c3e50;
   --cor-sucesso: #27ae60;
+  /* (MUDANÇA TAREFA 2.2) Nova variável para fundo de sucesso com contraste AA */
+  --cor-sucesso-fundo: #229954;   
   --cor-erro: #e74c3c;
   --cor-fundo: #f8f9fa;
   --cor-texto: #555;
@@ -73,12 +75,12 @@ img {
 
 /* Estilos Base de Links */
 a {
-  color: var(--cor-link); /* Usa o azul mais escuro para passar no contraste */
+  color: var(--cor-link); /* Corrigido para Acessibilidade (Tarefa 1.1) */
   text-decoration: none;
   transition: all 0.3s ease;
 }
 a:hover {
-  color: var(--cor-primaria-dark); /* Usa o azul médio no hover */
+  color: var(--cor-primaria-dark);
 }
 
 /* Skip Link (Acessibilidade) */
@@ -91,13 +93,11 @@ a:hover {
   padding: var(--esp-sm);
   border-radius: var(--border-radius);
   z-index: 9999;
-  /* (REFINAMENTO 1) Adiciona transição suave */
-  transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out; /* Refinamento */
 }
 .skip-link:focus {
   left: var(--esp-sm);
-  /* (REFINAMENTO 1) Adiciona sombra no foco */
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* Refinamento */
 }
 
 /* ===================================================
@@ -152,7 +152,7 @@ footer a {
   text-decoration: underline;
 }
 footer a:hover {
-  color: var(--cor-primaria); /* Azul claro original no hover do footer */
+  color: var(--cor-primaria);
 }
 
 /* ===================================================
@@ -180,14 +180,87 @@ header nav a::after {
   left: var(--esp-sm);
   height: 2px;
   width: 0;
-  background-color: var(--cor-primaria); /* Linha usa azul claro */
+  background-color: var(--cor-primaria);
   transition: width 0.3s ease;
 }
 header nav a:hover {
-  color: var(--cor-primaria); /* Texto hover usa azul claro */
+  color: var(--cor-primaria);
 }
 header nav a:hover::after {
   width: calc(100% - var(--esp-sm) * 2);
+}
+
+/* * =======================================================
+ * MUDANÇA (Tarefa 3.2): Estilos do Submenu Dropdown
+ * =======================================================
+ */
+
+/* 1. O 'li' pai (container) precisa de posicionamento relativo 
+      para que o submenu 'absolute' se posicione em relação a ele. */
+header nav li.dropdown {
+  position: relative;
+}
+
+/* 2. O submenu em si (a lista <ul>) */
+.submenu {
+  display: none; /* Escondido por padrão */
+  position: absolute; /* Posição absoluta em relação ao li.dropdown */
+  top: 100%; /* Começa exatamente abaixo do item pai */
+  left: 0;
+  
+  /* Estilização visual */
+  background-color: var(--cor-branca);
+  min-width: 260px; /* Garante que o dropdown tenha uma boa largura */
+  border-radius: var(--border-radius);
+  box-shadow: var(--sombra-suave);
+  padding: var(--esp-sm) 0; /* Espaçamento interno (vertical) */
+  list-style: none; /* Remove bullets da <ul> */
+  
+  /* Animação sutil de entrada */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  
+  /* Garante que o dropdown fique acima de outros elementos */
+  z-index: 1002; 
+}
+
+/* 3. A MÁGICA: Mostrar o submenu no desktop */
+/* * Usamos :hover no 'li' pai para mouse.
+ * Usamos :focus-within no 'li' pai para acessibilidade de teclado.
+ * Quando o 'li' pai (dropdown) "contém o foco", o submenu aparece.
+ */
+header nav li.dropdown:hover > .submenu,
+header nav li.dropdown:focus-within > .submenu {
+  display: block; /* Torna visível */
+  opacity: 1; /* Fade in */
+  transform: translateY(0); /* Move para a posição correta */
+}
+
+/* 4. Estilo dos links (<a>) dentro do submenu */
+.submenu li a {
+  display: block; /* Faz o link ocupar 100% da largura do <li> */
+  padding: var(--esp-xs) var(--esp-md);
+  color: var(--cor-texto);
+  font-weight: 400; /* Texto mais leve que o menu principal */
+  width: 100%;
+}
+
+/* Remove o '::after' (linha animada) dos links do submenu */
+.submenu li a::after {
+  display: none;
+}
+
+.submenu li a:hover {
+  color: var(--cor-primaria);
+  background-color: var(--cor-fundo); /* Destaque sutil no item */
+}
+
+/* 5. CORREÇÃO DO BUG: Estilizando o divisor */
+.submenu-divisor {
+  border: 0; /* Remove a borda 3D padrão do <hr> */
+  border-top: 1px solid var(--cor-borda); /* Adiciona nossa linha limpa */
+  margin: var(--esp-xs) var(--esp-md); /* Margem interna (vertical) e externa (horizontal) */
 }
 
 /* --- Componente: Menu Hambúrguer --- */
@@ -209,20 +282,19 @@ header nav a:hover::after {
   height: 3px;
   background-color: var(--cor-secundaria);
   border-radius: 2px;
-  /* (REFINAMENTO 3) Prepara as linhas para a animação */
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   transform-origin: center;
 }
-/* (REFINAMENTO 3) Animação do Hambúrguer para 'X' */
 .menu-hamburguer.menu-aberto span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
 }
 .menu-hamburguer.menu-aberto span:nth-child(2) {
-  opacity: 0;
+    opacity: 0;
 }
 .menu-hamburguer.menu-aberto span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
 }
+
 
 /* --- Componente: Conteúdo do Main (Tipografia e Espaçamento) --- */
 main h2 {
@@ -279,6 +351,53 @@ main figcaption {
   box-shadow: var(--sombra-suave);
   overflow: hidden;
   transition: all 0.3s ease;
+  position: relative;
+}
+/* * =======================================================
+ * MUDANÇA (Tarefa 4.2): Estilos das Badges dos Cards
+ * Adicionado para Melhoria II.2 (Badges/Tags)
+ * =======================================================
+ */
+
+/* 1. O container das badges */
+.card-badges {
+  /* Posiciona o container no canto superior direito do card */
+  position: absolute;
+  top: var(--esp-sm);
+  right: var(--esp-md);
+  
+  /* Garante que fique acima da imagem */
+  z-index: 10; 
+  
+  /* Espaçamento se houver mais de uma badge */
+  display: flex;
+  gap: var(--esp-xs);
+}
+
+/* 2. O estilo base da badge */
+.badge {
+  background-color: var(--cor-secundaria); /* Cor padrão */
+  color: var(--cor-branca);
+  padding: 4px var(--esp-xs);
+  border-radius: calc(var(--border-radius) / 2); /* Borda mais "quadrada" */
+  font-size: var(--fonte-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* 3. Cores específicas por categoria */
+.badge-educacao {
+  /* Usando --cor-sucesso-fundo que já definimos (verde) */
+  background-color: var(--cor-sucesso-fundo); 
+  color: var(--cor-branca);
+}
+
+.badge-comunidade {
+  /* Usando a cor primária do site (azul) */
+  background-color: var(--cor-primaria-dark); 
+  color: var(--cor-branca);
 }
 .projeto-card:hover {
   transform: translateY(-5px);
@@ -292,7 +411,7 @@ main figcaption {
   aspect-ratio: 800 / 533;
 }
 .projeto-card h3 {
-  padding: var(--esp-md) var(--esp-md) 0 var(--esp-md);
+  padding: var(--esp-xl) var(--esp-md) 0 var(--esp-md);
 }
 .projeto-card p {
   padding: 0 var(--esp-md) var(--esp-md) var(--esp-md);
@@ -310,7 +429,7 @@ main figcaption {
   padding: var(--esp-lg);
   border-radius: var(--border-radius);
   margin-bottom: var(--esp-lg);
-  border-left: 5px solid var(--cor-link); /* Usa cor de link acessível */
+  border-left: 5px solid var(--cor-link);
   box-shadow: var(--sombra-suave);
 }
 .info-card h3 {
@@ -321,7 +440,7 @@ main figcaption {
   margin-bottom: var(--esp-sm);
 }
 .info-card > *:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* --- Componente: Formulário de Cadastro --- */
@@ -339,7 +458,7 @@ main figcaption {
   margin-bottom: var(--esp-lg);
 }
 .formulario-cadastro fieldset:last-of-type {
-  margin-bottom: var(--esp-md);
+    margin-bottom: var(--esp-md);
 }
 .formulario-cadastro legend {
   font-size: var(--fonte-md);
@@ -373,12 +492,56 @@ main figcaption {
 }
 .campo-entrada:invalid:not(:placeholder-shown) {
   border-color: var(--cor-erro);
-  /* (REFINAMENTO 2) Adiciona sombra vermelha sutil */
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
 .formulario-cadastro .campo-entrada {
   margin-bottom: var(--esp-md);
 }
+
+/* * =======================================================
+ * MUDANÇA (Tarefa 2.2): Estilização do Select
+ * Adicionado para Melhoria I.1 (Select de Estado)
+ * =======================================================
+*/
+select.campo-entrada {
+  /* Remove a seta padrão do navegador */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  /* Adiciona nossa própria seta (um SVG embutido) */
+  /* A cor %232c3e50 é o --cor-secundaria (texto escuro) */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%232c3e50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right var(--esp-sm) center;
+  background-size: 1.5rem; /* Tamanho do ícone da seta */
+
+  /* Adiciona espaço extra à direita para o texto não ficar embaixo da seta */
+  padding-right: var(--esp-xl); 
+}
+
+/* Faz a opção "Selecione..." parecer um placeholder */
+select.campo-entrada:invalid {
+    color: var(--cor-texto);
+    opacity: 0.7;
+}
+
+/* Cor do texto quando uma opção válida é selecionada */
+select.campo-entrada:valid {
+    color: inherit;
+    opacity: 1;
+}
+
+/* Garante que o select também receba feedback de validação JS */
+select.campo-entrada.invalido {
+    border-color: var(--cor-erro);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+select.campo-entrada.valido {
+     border-color: var(--cor-sucesso);
+}
+/* --- Fim da Mudança (Tarefa 2.2) --- */
+
 
 /* --- Componente: Botões --- */
 .botao {
@@ -423,17 +586,34 @@ main figcaption {
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
 }
 
-/* --- Estilo para Mensagens de Erro do Formulário (JS) --- */
+/* * =======================================================
+ * MUDANÇA (Tarefa 2.2): Estilo da Mensagem de Sucesso
+ * Adicionado para Melhoria III.3 (Feedback Visual)
+ * =======================================================
+*/
+/* --- Componente: Mensagem de Sucesso (JS) --- */
+.mensagem-sucesso {
+  /* Usa a nova variável --cor-sucesso-fundo para garantir contraste 4.5:1+ */
+  background-color: var(--cor-sucesso-fundo); 
+  color: var(--cor-branca);
+  padding: var(--esp-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--esp-lg);
+  text-align: center;
+  font-weight: 600;
+}
+/* --- Fim da Mudança (Tarefa 2.2) --- */
+
+
+/* --- Componente: Mensagem de Erro do Formulário (JS) --- */
 .mensagem-erro {
-  display: block; /* Garante que fique abaixo do input */
+  display: block;
   color: var(--cor-erro);
   font-size: var(--fonte-xs);
-  margin-top: calc(var(--esp-xs) * -1 + 4px); /* Puxa um pouco para cima */
-  margin-bottom: var(--esp-sm); /* Mantém espaço antes do próximo label */
-  min-height: 1.2em; /* Evita 'pulo' no layout quando a msg aparece/some */
+  margin-top: calc(var(--esp-xs) * -1 + 4px);
+  margin-bottom: var(--esp-sm);
+  min-height: 1.2em;
 }
-
-/* Estilo extra para input inválido via classe JS */
 .campo-entrada.invalido {
   border-color: var(--cor-erro);
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
@@ -441,6 +621,37 @@ main figcaption {
 .campo-entrada.valido {
   border-color: var(--cor-sucesso);
 }
+/* * =======================================================
+ * MUDANÇA (Tarefa 5.2): Componente de Vídeo Responsivo
+ * Adicionado para Melhoria I.2 (Multimídia)
+ * =======================================================
+ */
+ 
+/* 1. O container (wrapper) que define a proporção */
+.video-wrapper {
+  position: relative;
+  /* Esta é a mágica: 9 (altura) / 16 (largura) = 0.5625 = 56.25% */
+  /* Isso força o container a ter uma altura que é 56.25% de sua largura */
+  padding-bottom: 56.25%; 
+  height: 0; /* O 'padding-bottom' já cuida da altura */
+  
+  /* Estilização extra: */
+  overflow: hidden;
+  border-radius: var(--border-radius); /* Cantos arredondados */
+  box-shadow: var(--sombra-suave); /* Sombra para destacar */
+  margin-top: var(--esp-lg); /* Espaço acima do vídeo */
+}
+
+/* 2. O iframe em si */
+.video-wrapper iframe {
+  /* O iframe preenche 100% do wrapper */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 
 /* ===================================================
    4. RESPONSIVE BREAKPOINTS (@media queries)
@@ -448,23 +659,14 @@ main figcaption {
 
 /* Breakpoint 1: Telas MUITO Pequenas (< 480px) */
 @media (max-width: 480px) {
-  header h1 {
-    font-size: var(--fonte-sm);
-  }
-  main {
-    padding-top: var(--esp-lg);
-    padding-bottom: var(--esp-lg);
-  }
-  .formulario-cadastro {
-    padding: var(--esp-md);
-  }
+  header h1 { font-size: var(--fonte-sm); }
+  main { padding-top: var(--esp-lg); padding-bottom: var(--esp-lg); }
+  .formulario-cadastro { padding: var(--esp-md); }
 }
 
 /* Breakpoint 2: Tablet Vertical / Mobile (< 768px) */
 @media (max-width: 768px) {
-  .menu-hamburguer {
-    display: flex;
-  }
+  .menu-hamburguer { display: flex; }
   header nav {
     display: block;
     position: absolute;
@@ -501,58 +703,48 @@ main figcaption {
   header nav a::after {
     display: none;
   }
-  header .container {
-    justify-content: space-between;
-  }
-  header h1 {
-    font-size: var(--fonte-md);
-  }
+  header .container { justify-content: space-between; }
+  header h1 { font-size: var(--fonte-md); }
 }
 
 /* Breakpoint 3: Tablet Horizontal / Desktop Pequeno (> 769px) */
 @media (min-width: 769px) {
   /* Reseta estilos mobile da navegação */
   header nav {
-    display: block !important;
-    position: static;
-    width: auto;
-    background-color: transparent;
-    box-shadow: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    transition: none;
-    z-index: auto;
+      display: block !important;
+      position: static;
+      width: auto;
+      background-color: transparent;
+      box-shadow: none;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
+      z-index: auto;
   }
   header nav ul {
     flex-direction: row;
     padding: 0;
     gap: var(--esp-md);
-  }
+ }
   header nav li {
-    width: auto;
+      width: auto;
   }
-  header nav a {
-    padding: var(--esp-sm);
-    width: auto;
-    display: inline-block;
-  }
-  header nav a::after {
-    display: block;
-  }
-  .menu-hamburguer {
-    display: none !important;
-  }
-  header h1 {
-    font-size: var(--fonte-lg);
-  }
+   header nav a {
+      padding: var(--esp-sm);
+      width: auto;
+      display: inline-block;
+   }
+   header nav a::after {
+       display: block;
+   }
+  .menu-hamburguer { display: none !important; }
+  header h1 { font-size: var(--fonte-lg); }
 }
 
 /* Breakpoint 4: Desktops Médios (> 1024px) */
 @media (min-width: 1024px) {
-  body {
-    font-size: calc(var(--fonte-sm) * 1.05);
-  }
+  body { font-size: calc(var(--fonte-sm) * 1.05); }
 }
 
 /* Breakpoint 5: Desktops Grandes (> 1200px) */
@@ -565,124 +757,79 @@ main figcaption {
    =================================================== */
 
 @media (prefers-color-scheme: dark) {
-  /* Redefine as variáveis GLOBAIS para o modo escuro */
   :root {
     --cor-fundo: #1a1a1a;
     --cor-texto: #e0e0e0;
-    --cor-secundaria: #f8f9fa; /* Invertido */
-    --cor-branca: #2c3e50; /* Invertido */
+    --cor-secundaria: #f8f9fa;
+    --cor-branca: #2c3e50;
     --cor-borda: #444;
     --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.4);
     --cor-primaria: #5dade2;
     --cor-primaria-dark: #85c1e9;
-    --cor-link: #5dade2; /* Link claro no fundo escuro */
+    --cor-link: #5dade2;
     --cor-sucesso: #58d68d;
+    --cor-sucesso-fundo: #58d68d; /* Verde claro */
     --cor-erro: #f1948a;
   }
 
-  /* --- Ajustes Específicos para Elementos no Modo Escuro --- */
-  header {
-    background-color: var(--cor-branca); /* Cinza escuro */
-    box-shadow: var(--sombra-suave);
-  }
-  header h1 {
-    color: var(--cor-texto); /* Texto claro */
-  }
-  header nav a {
-    color: var(--cor-texto);
-  }
-  header nav a:hover {
-    color: var(--cor-primaria);
-  }
-  header nav a::after {
-    background-color: var(--cor-primaria);
-  }
-  .menu-hamburguer span {
-    background-color: var(--cor-texto);
-  }
+  /* --- Ajustes Específicos Modo Escuro --- */
+  header { background-color: var(--cor-branca); box-shadow: var(--sombra-suave); }
+  header h1 { color: var(--cor-texto); }
+  header nav a { color: var(--cor-texto); }
+  header nav a:hover { color: var(--cor-primaria); }
+  header nav a::after { background-color: var(--cor-primaria); }
+  .menu-hamburguer span { background-color: var(--cor-texto); }
+  footer { background-color: var(--cor-secundaria); color: #333; }
+  footer a { color: #21618C; text-decoration: underline; }
+  footer a:hover { color: #2980B9; }
+  .projeto-card, .info-card, .formulario-cadastro { background-color: #2c3e50; box-shadow: var(--sombra-suave); border: 1px solid var(--cor-borda); }
+  .info-card { border-left-color: var(--cor-primaria); }
+  .projeto-card h3, .info-card h3, .formulario-cadastro legend, .formulario-cadastro label { color: var(--cor-texto); border-bottom-color: var(--cor-borda); }
+  .campo-entrada { background-color: #34495e; border-color: var(--cor-borda); color: var(--cor-texto); }
+  .campo-entrada::placeholder { color: rgba(224, 224, 224, 0.6); }
 
-  footer {
-    background-color: var(--cor-secundaria); /* Cinza claro */
-    color: #333; /* Texto mais escuro no fundo claro */
+  /* * =======================================================
+   * MUDANÇA (Tarefa 2.2): Estilos do Select no Modo Escuro
+   * =======================================================
+  */
+  select.campo-entrada {
+       /* Muda a cor da seta para claro */
+       background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+   }
+   select.campo-entrada:invalid {
+       color: var(--cor-texto);
+       opacity: 0.7;
+   }
+   select.campo-entrada:valid {
+       color: var(--cor-texto);
+       opacity: 1;
+   }
+   /* --- Fim da Mudança (Tarefa 2.2) --- */
+   
+  .campo-entrada:focus { border-color: var(--cor-primaria); box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.15); }
+  .campo-entrada:valid { border-color: var(--cor-sucesso); }
+  .campo-entrada:invalid:not(:placeholder-shown) { border-color: var(--cor-erro); box-shadow: 0 0 0 3px rgba(241, 148, 138, 0.15); }
+  .botao-primario { background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-primaria-dark) 100%); color: #1a1a1a; }
+  .botao-primario:hover { box-shadow: 0 8px 25px rgba(93, 173, 226, 0.3); }
+  .formulario-cadastro .botao:focus, .info-card .botao:focus { box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.4); }
+  .skip-link { background-color: var(--cor-texto); color: var(--cor-fundo); }
+  .skip-link:focus { box-shadow: 0 0 0 3px rgba(224, 224, 224, 0.5); }
+     
+  /* * =======================================================
+   * MUDANÇA (Tarefa 2.2): Mensagem de Sucesso no Modo Escuro
+   * =======================================================
+  */
+  .mensagem-sucesso {
+      background-color: var(--cor-sucesso-fundo); /* Verde claro */
+      color: #1a1a1a; /* Texto escuro (Contraste OK) */
   }
-  footer a {
-    color: #21618c; /* Azul escuro original (contraste OK com #f8f9fa) */
-    text-decoration: underline;
-  }
-  footer a:hover {
-    color: #2980b9; /* Azul médio original */
-  }
-
-  .projeto-card,
-  .info-card,
-  .formulario-cadastro {
-    background-color: #2c3e50; /* Cinza escuro */
-    box-shadow: var(--sombra-suave);
-    border: 1px solid var(--cor-borda);
-  }
-  .info-card {
-    border-left-color: var(--cor-primaria); /* Borda azul clara */
-  }
-
-  .projeto-card h3,
-  .info-card h3,
-  .formulario-cadastro legend,
-  .formulario-cadastro label {
-    color: var(--cor-texto); /* Texto claro */
-    border-bottom-color: var(--cor-borda);
-  }
-
-  .campo-entrada {
-    background-color: #34495e;
-    border-color: var(--cor-borda);
-    color: var(--cor-texto);
-  }
-  .campo-entrada::placeholder {
-    color: rgba(224, 224, 224, 0.6);
-  }
-  .campo-entrada:focus {
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.15);
-  }
-  .campo-entrada:valid {
-    border-color: var(--cor-sucesso);
-  }
-  .campo-entrada:invalid:not(:placeholder-shown) {
-    border-color: var(--cor-erro);
-    box-shadow: 0 0 0 3px rgba(241, 148, 138, 0.15);
-  }
-
-  .botao-primario {
-    background: linear-gradient(
-      135deg,
-      var(--cor-primaria) 0%,
-      var(--cor-primaria-dark) 100%
-    );
-    color: #1a1a1a; /* Texto escuro no botão claro (Contraste OK) */
-  }
-  .botao-primario:hover {
-    box-shadow: 0 8px 25px rgba(93, 173, 226, 0.3);
-  }
-  .formulario-cadastro .botao:focus,
-  .info-card .botao:focus {
-    box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.4);
-  }
-
-  .skip-link {
-    background-color: var(--cor-texto);
-    color: var(--cor-fundo);
-  }
-  .skip-link:focus {
-    box-shadow: 0 0 0 3px rgba(224, 224, 224, 0.5);
-  }
+  /* --- Fim da Mudança (Tarefa 2.2) --- */
 }
 
 /* ===================================================
    EXTRA 2: MODO ALTO CONTRASTE (prefers-contrast)
    =================================================== */
-
 @media (prefers-contrast: more) {
-  /* Define cores de altíssimo contraste */
   :root {
     --cor-fundo: #000000;
     --cor-texto: #ffffff;
@@ -693,121 +840,66 @@ main figcaption {
     --cor-branca: #000000;
     --cor-borda: #ffffff;
     --cor-sucesso: #00ff00;
+    --cor-sucesso-fundo: #00ff00; /* (MUDANÇA TAREFA 2.2) */
     --cor-erro: #ff00ff;
     --sombra-suave: none;
   }
 
   /* --- Ajustes Gerais Alto Contraste --- */
-  body,
-  header,
-  footer,
-  .projeto-card,
-  .info-card,
-  .formulario-cadastro,
-  .campo-entrada {
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    border: 1px solid var(--cor-borda);
-    box-shadow: none;
+  body, header, footer, .projeto-card, .info-card, .formulario-cadastro, .campo-entrada { background-color: var(--cor-fundo); color: var(--cor-texto); border: 1px solid var(--cor-borda); box-shadow: none; }
+  h1, h2, h3, h4, h5, h6, legend, label { color: var(--cor-texto); }
+  a, footer a { color: var(--cor-link); text-decoration: underline; }
+  a:hover, footer a:hover { color: var(--cor-primaria-dark); }
+  header nav a, .menu-hamburguer span { color: var(--cor-texto); background-color: transparent; }
+  header nav a::after { background-color: var(--cor-link); }
+  .info-card { border-left-color: var(--cor-link); }
+  
+  /* * =======================================================
+   * MUDANÇA (Tarefa 2.2): Select Alto Contraste
+   * =======================================================
+  */
+  select.campo-entrada {
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      color: var(--cor-texto);
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  legend,
-  label {
-    color: var(--cor-texto);
+  select.campo-entrada:invalid { color: var(--cor-texto); opacity: 0.7; }
+  select.campo-entrada:valid { color: var(--cor-texto); opacity: 1; }
+  /* --- Fim da Mudança (Tarefa 2.2) --- */
+  
+  .campo-entrada { background-color: var(--cor-fundo); border-color: var(--cor-borda); color: var(--cor-texto); }
+  .campo-entrada::placeholder { color: #aaa; }
+  .campo-entrada:focus { border-color: var(--cor-link); box-shadow: 0 0 0 3px var(--cor-link); }
+  .campo-entrada:valid { border-color: var(--cor-sucesso); }
+  .campo-entrada:invalid:not(:placeholder-shown) { border-color: var(--cor-erro); box-shadow: 0 0 0 3px var(--cor-erro); }
+  .botao { border: 2px solid var(--cor-texto); background: var(--cor-fundo); color: var(--cor-texto); }
+  .botao-primario { border-color: var(--cor-primaria); background: var(--cor-primaria); color: var(--cor-fundo); }
+  .botao:focus, .botao-primario:focus { outline: 2px solid var(--cor-link); outline-offset: 2px; box-shadow: none; }
+  
+  /* * =======================================================
+   * MUDANÇA (Tarefa 2.2): Mensagem Sucesso Alto Contraste
+   * =======================================================
+  */
+  .mensagem-sucesso {
+      background-color: var(--cor-sucesso-fundo);
+      color: var(--cor-fundo); /* Texto preto no fundo verde brilhante */
+      border: 1px solid var(--cor-borda);
+      font-weight: 600;
   }
-  a,
-  footer a {
-    color: var(--cor-link);
-    text-decoration: underline;
-  }
-  a:hover,
-  footer a:hover {
-    color: var(--cor-primaria-dark);
-  }
-  header nav a,
-  .menu-hamburguer span {
-    color: var(--cor-texto);
-    background-color: transparent;
-  }
-  header nav a::after {
-    background-color: var(--cor-link);
-  }
-  .info-card {
-    border-left-color: var(--cor-link);
-  }
-  .campo-entrada {
-    background-color: var(--cor-fundo);
-    border-color: var(--cor-borda);
-    color: var(--cor-texto);
-  }
-  .campo-entrada::placeholder {
-    color: #aaa;
-  }
-  .campo-entrada:focus {
-    border-color: var(--cor-link);
-    box-shadow: 0 0 0 3px var(--cor-link);
-  }
-  .campo-entrada:valid {
-    border-color: var(--cor-sucesso);
-  }
-  .campo-entrada:invalid:not(:placeholder-shown) {
-    border-color: var(--cor-erro);
-    box-shadow: 0 0 0 3px var(--cor-erro);
-  }
-  .botao {
-    border: 2px solid var(--cor-texto);
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-  }
-  .botao-primario {
-    border-color: var(--cor-primaria);
-    background: var(--cor-primaria);
-    color: var(--cor-fundo);
-  }
-  .botao:focus,
-  .botao-primario:focus {
-    outline: 2px solid var(--cor-link);
-    outline-offset: 2px;
-    box-shadow: none;
-  }
+  /* --- Fim da Mudança (Tarefa 2.2) --- */
 }
 
-/* Breakpoint 6: Impressão */
+/* ===================================================
+   Breakpoint 6: Impressão
+   =================================================== */
 @media print {
-  body {
-    background-color: #ffffff;
-    color: #000;
-    font-size: 12pt;
-  } /* Fundo branco explícito */
-  header,
-  footer,
-  .menu-hamburguer,
-  .skip-link {
-    display: none;
-  }
-  a {
-    text-decoration: underline;
-    color: #000;
-  }
-  main {
-    padding: 0;
-  }
-  .container {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  .projeto-card,
-  .formulario-cadastro,
-  .info-card {
-    box-shadow: none;
-    border: 1px solid #ccc;
-    margin-bottom: var(--esp-md);
-  }
+  body { background-color: #ffffff; color: #000; font-size: 12pt; }
+  header, footer, .menu-hamburguer, .skip-link, .botao, .mensagem-sucesso, .mensagem-erro { display: none; }
+  a { text-decoration: underline; color: #000; }
+  main { padding: 0; }
+  .container { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+  .projeto-card, .formulario-cadastro, .info-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: var(--esp-md); }
+  /* (MUDANÇA TAREFA 2.2) Estilos de impressão do formulário */
+  .formulario-cadastro { border: none; box-shadow: none; }
+  .campo-entrada { border: 1px solid #ccc; }
+  select.campo-entrada { appearance: none; background-image: none; }
 }
